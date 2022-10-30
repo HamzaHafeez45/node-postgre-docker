@@ -2,11 +2,18 @@ version: '3.4'
 
 services:
   nodepostgre:
-    image: nodepostgre
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    environment:
-      NODE_ENV: production
+    build: .
+    depends_on:
+      - postgres
     ports:
-      - 3000:3000
+      - "3000:3000"
+      
+  postgres:
+    image: postgres
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 786110
+      POSTGRES_DB: postgres
+    

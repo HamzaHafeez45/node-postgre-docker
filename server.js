@@ -2,9 +2,15 @@ const client = require("./connection");
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const cors = require("cors");
 
 const schools = require("./Module/School/route");
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(bodyParser.json());
 
 client

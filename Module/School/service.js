@@ -26,10 +26,10 @@ exports.getAllSchools = async () => {
 
 //post school
 exports.addSchool = async (data) => {
-  let insertQuery = `insert into schools(id,name) values(${data.id}, '${data.name}')`;
-
+  const insertQuery = "insert into schools(id,name) values($1,$2)";
+  const values = [data.id, data.name];
   return await client
-    .query(insertQuery)
+    .query(insertQuery, values)
     .then(() => {
       return "Successfully added";
     })
@@ -39,10 +39,11 @@ exports.addSchool = async (data) => {
 };
 
 // //update the school
-exports.updateSchoolByID = async (id, data) => {
-  let updateQuery = `update schools set name = '${data.name}' where id = ${id}`;
+exports.updateSchoolByID = async (data) => {
+  let updateQuery = "update schools set name = $1 where id = $2";
+  const values = [data.name, data.id];
   return await client
-    .query(updateQuery)
+    .query(updateQuery, values)
     .then(() => {
       return "Successfully updated";
     })
@@ -53,9 +54,10 @@ exports.updateSchoolByID = async (id, data) => {
 
 //delete the school
 exports.deleteSchoolByID = async (id) => {
-  let deleteQuery = `delete from schools where id=${id}`;
+  let deleteQuery = "delete from schools where id=$1";
+  const values = [id];
   return await client
-    .query(deleteQuery)
+    .query(deleteQuery, values)
     .then(() => {
       return "Successfully deleted";
     })

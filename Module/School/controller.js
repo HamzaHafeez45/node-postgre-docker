@@ -10,9 +10,13 @@ const {
 exports.getSchoolById = async (req, res) => {
   try {
     const result = await getSchoolByID(req.params.id);
-    return res.status(200).send(result);
+    return res.status(200).json({
+      data: result,
+    });
   } catch (error) {
-    return res.send(error.message);
+    return res.status(404).json({
+      error: error.message,
+    });
   }
 };
 
@@ -20,9 +24,13 @@ exports.getSchoolById = async (req, res) => {
 exports.getAllSchool = async (req, res) => {
   try {
     const result = await getAllSchools();
-    return res.status(200).send(result);
+    return res.status(200).json({
+      data: result,
+    });
   } catch (error) {
-    return res.send(error.message);
+    return res.status(404).json({
+      error: error.message,
+    });
   }
 };
 
@@ -30,19 +38,27 @@ exports.getAllSchool = async (req, res) => {
 exports.postSchool = async (req, res) => {
   try {
     const result = await addSchool(req.body);
-    return res.status(200).send(result);
+    return res.status(201).json({
+      data: result,
+    });
   } catch (error) {
-    return res.send(error.message);
+    return res.status(400).json({
+      error: error.message,
+    });
   }
 };
 
 //update school
 exports.updateSchoolById = async (req, res) => {
   try {
-    const result = await updateSchoolByID(req.params.id, req.body);
-    return res.send(result);
+    const result = await updateSchoolByID(req.body);
+    return res.status(201).json({
+      data: result,
+    });
   } catch (error) {
-    res.send(error.message);
+    return res.status(400).json({
+      error: error.message,
+    });
   }
 };
 
@@ -50,8 +66,12 @@ exports.updateSchoolById = async (req, res) => {
 exports.deleteSchoolById = async (req, res) => {
   try {
     const result = await deleteSchoolByID(req.params.id);
-    return res.send(result);
+    return res.status(200).json({
+      data: result,
+    });
   } catch (error) {
-    res.send(error.message);
+    return res.status(400).json({
+      error: error.message,
+    });
   }
 };
